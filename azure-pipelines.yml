@@ -61,17 +61,17 @@ stages:
                 kubectl delete secret env
               }
               kubectl create secret generic env `
-              --from-literal=PORT=8080 `
-              --from-literal=PGHOST=$(pg_host) `
-              --from-literal=PGUSERNAME=$(pg_username) `
-              --from-literal=PGDATABASE=postgres `
-              --from-literal=PGPASSWORD=$(pg_password) `
-              --from-literal=PGPORT=5432 `
-              --from-literal=HOST_URL=$(host_url) `
-              --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
-              --from-literal=OKTA_ORG_URL=$(okta_org_url) `
-              --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
-              --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret) ` 
+                --from-literal=PORT=8080 `
+                --from-literal=PGHOST=$(pg_host) `
+                --from-literal=PGUSERNAME=$(pg_username) `
+                --from-literal=PGDATABASE=postgres `
+                --from-literal=PGPASSWORD=$(pg_password) `
+                --from-literal=PGPORT=5432 `
+                --from-literal=HOST_URL=$(host_url) `
+                --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
+                --from-literal=OKTA_ORG_URL=$(okta_org_url) `
+                --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
+                --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret) ` 
             displayName: create env
 
           - powershell: kubectl apply -f kubernetes.yaml
