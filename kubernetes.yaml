@@ -17,72 +17,72 @@ spec:
       containers:
       - image: weighttracker.azurecr.io/weight-tracker
         name: weight-tracker
-        # env:
-        # - name: PORT
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PORT
-        # - name: HOST
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: HOST
-        # - name: PGHOST
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGHOST
-        # - name: PGUSERNAME
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGUSERNAME
-        # - name: PGDATABASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGDATABASE
-        # - name: PGPASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGPASSWORD
-        # - name: PGPORT
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGPORT
-        # - name: HOST_URL
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: HOST_URL
-        # - name:  COOKIE_ENCRYPT_PWD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: COOKIE_ENCRYPT_PWD
-        # - name:  NODE_ENV
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: NODE_ENV
-        # - name:  OKTA_ORG_URL
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: OKTA_ORG_URL
-        # - name:  OKTA_CLIENT_ID
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: OKTA_CLIENT_ID
-        # - name:  OKTA_CLIENT_SECRET
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: OKTA_CLIENT_SECRET
+        env:
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PORT
+        - name: HOST
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: HOST
+        - name: PGHOST
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGHOST
+        - name: PGUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGUSERNAME
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGDATABASE
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPASSWORD
+        - name: PGPORT
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPORT
+        - name: HOST_URL
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: HOST_URL
+        - name:  COOKIE_ENCRYPT_PWD
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: COOKIE_ENCRYPT_PWD
+        - name:  NODE_ENV
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: NODE_ENV
+        - name:  OKTA_ORG_URL
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_ORG_URL
+        - name:  OKTA_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_CLIENT_ID
+        - name:  OKTA_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_CLIENT_SECRET
       imagePullSecrets:
       - name: regcred
 
