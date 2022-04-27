@@ -27,4 +27,4 @@ spec:
       - image: weighttrackeruriel.azurecr.io/weight-tracker
         name: webapp
       imagePullSecrets:
-      - name: registrykey
+      - name: regcred
