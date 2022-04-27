@@ -50,11 +50,10 @@ stages:
           #   displayName: connect to cluster
 
           - script: |
-              echo check
-              # kubectl get secret regcred
-              # if [ $? == 0 ]; then
-              #   kubectl delete secret regcred
-              # fi
+              kubectl get secret regcred
+              if [ $? == 0 ]; then
+                kubectl delete secret regcred
+              fi
               kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
             displayName: create secret regcred
 
@@ -63,6 +62,7 @@ stages:
               if [ $? == 0 ]; then
                 kubectl delete secret env
               fi
+              kubectl create secret generic env
 
 
             displayName: create env
