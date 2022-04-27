@@ -86,7 +86,7 @@ spec:
       imagePullSecrets:
       - name: regcred
 
-      ---
+---
 
 kind: Service
 apiVersion: v1
