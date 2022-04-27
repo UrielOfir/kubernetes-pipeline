@@ -64,7 +64,7 @@ stages:
               --from-literal=PORT=8080
             displayName: create env
 
-          - script: kubectl apply -f kubernetes.yaml
+          - bash: kubectl apply -f kubernetes.yaml
             displayName: apply kubernetes yaml
           # - template: tools/kubernetesPipeline.yml
           #   parameters:
