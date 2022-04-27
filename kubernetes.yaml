@@ -6,7 +6,7 @@ type: kubernetes.io/dockerconfigjson
 data:
   .dockerconfigjson: eyJhdXRocyI6eyJ3ZWlnaHR0cmFja2VyLmF6dXJlY3IuaW8iOnsidXNlcm5hbWUiOiJ3ZWlnaHR0cmFja2VyIiwicGFzc3dvcmQiOiJ3ZWlnaHR0cmFja2VyIiwiYXV0aCI6ImQyVnBaMmgwZEhKaFkydGxjanAzWldsbmFIUjBjbUZqYTJWeSJ9fX0=
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp
@@ -25,8 +25,9 @@ spec:
       containers:
       - image: weighttrackeruriel.azurecr.io/weight-tracker
         name: webapp
+        env:
+        - name: OKTA_ORG_URL
+          value: https://github.com/
       imagePullSecrets:
       - name: regcred
-      env:
-      - name: OKTA_ORG_URL
-        value: https://github.com/
+      
