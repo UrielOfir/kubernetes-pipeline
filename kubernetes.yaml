@@ -18,11 +18,11 @@ spec:
       - image: weighttracker.azurecr.io/weight-tracker
         name: weight-tracker
         env:
-        - name:  PORT
-          valueFrom:
-            secretKeyRef:
-              name: env
-              key: PORT
+        # - name:  PORT
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: env
+        #       key: PORT
         - name:  HOST
           value: "0.0.0.0"
         - name:  PGHOST
