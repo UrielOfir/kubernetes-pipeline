@@ -41,8 +41,7 @@ stages:
   jobs:
   - deployment: staging
     displayName: Deploy to Staging
-    pool: default
-    environment: deploy
+    environment: pool
     strategy:
       runOnce:
         deploy:
