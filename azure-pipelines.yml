@@ -12,28 +12,28 @@ variables:
 stages:
 
 # Continuous Integration Process
-- stage: CI
-  jobs:
-  - job: BuildAndPushDocker
-    workspace: 
-      clean: all
-    steps:
-    - powershell: |
-        if ( docker images $(registry_url)/weight-tracker -q )
-        {
-          docker rmi $(docker images  $(registry_url)/weight-tracker -q)
-        }
-      displayName: remove previous docker images
+  # - stage: CI
+  #   jobs:
+  #   - job: BuildAndPushDocker
+  #     workspace: 
+  #       clean: all
+  #     steps:
+  #     - powershell: |
+  #         if ( docker images $(registry_url)/weight-tracker -q )
+  #         {
+  #           docker rmi $(docker images  $(registry_url)/weight-tracker -q)
+  #         }
+  #       displayName: remove previous docker images
 
-    - script: docker build -t $(registry_url)/weight-tracker:latest .
-      displayName: Build an image
+  #     - script: docker build -t $(registry_url)/weight-tracker:latest .
+  #       displayName: Build an image
 
-    - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
-      displayName: connect to azure container registry
-    
-    - script: docker push $(registry_url)/weight-tracker:latest
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-      displayName: Push the image to ther docker hub repository
+  #     - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
+  #       displayName: connect to azure container registry
+      
+  #     - script: docker push $(registry_url)/weight-tracker:latest
+  #       condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  #       displayName: Push the image to ther docker hub repository
 
 # Continuous Deployment Process for Staging Environment
 - stage: DeployToStaging
@@ -49,19 +49,18 @@ stages:
           # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
           #   displayName: connect to cluster
 
-          - powershell: |
-              if (kubectl get secret regcred){
-                kubectl delete secret regcred
-              }
-              kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
-            displayName: create secret regcred
+          # - powershell: |
+          #     if (kubectl get secret regcred){
+          #       kubectl delete secret regcred
+          #     }
+          #     kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
+          #   displayName: create secret regcred
 
           - powershell: |
               if (kubectl get secret env){
                 kubectl delete secret env
               }
-              kubectl create secret generic env `
-                --from-literal=PORT=8080 `
+              kubectl create secret generic env --from-literal=PORT=8080 `
                 --from-literal=PGHOST=$(pg_host) `
                 --from-literal=PGUSERNAME=$(pg_username) `
                 --from-literal=PGDATABASE=postgres `
