@@ -11,30 +11,13 @@ parameters:
 - name: registry_username
 - name: registry_password
 - name: registry_url
-- name: hosts
-  type: object
+- name: cluster_resource_group
+- name: cluster_name
   
 
 steps:
-
-- script: |
-    if ! command -v ansible
-    then  
-      sudo apt update;
-      sudo apt install software-properties-common --yes;
-      sudo add-apt-repository --yes --update ppa:ansible/ansible;
-      sudo apt install ansible --yes;
-    fi
-  displayName: install ansible if needed
-
-- script: |
-    rm -rf dockerAnsible
-    git clone https://github.com/UrielOfir/dockerAnsible.git
-  displayName: clone ansible repo
-
-- ${{ each host in parameters.hosts }}:
-  - script: cd $(Build.SourcesDirectory)/dockerAnsible ; echo ${{host}} host=\"${{host}}\" >> inventory
-    displayName: add inventory
+- script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+  displayName: connect to cluster
 
 - script: |
     cd $(Build.SourcesDirectory)/dockerAnsible ;

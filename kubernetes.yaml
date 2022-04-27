@@ -1,4 +1,13 @@
 apiVersion: apps/v1
+kind: Secret
+metadata:
+  name: registry-credentials
+type: Opaque
+data:
+  username: YWRtaW4=
+  password: MWYyZDFlMmU2N2Rm
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp

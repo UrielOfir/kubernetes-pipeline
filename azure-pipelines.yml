@@ -41,60 +41,26 @@ stages:
   jobs:
   - deployment: staging
     displayName: Deploy to Staging
-    environment:
-      name: staging.stg-ansibleVM
     strategy:
       runOnce:
         deploy:
           steps:
-          - template: tools/ansible.yml
-            parameters:
-              pghost: $(stg_pghost)
-              pg_username: $(pg_username)
-              pg_password: $(pg_password)
-              LB_ip: $(stg_LB_ip)
-              okta_url: $(okta_url)
-              okta_client_id: $(okta_client_id)
-              okta_client_secret: $(okta_client_secret)
-              ansible_username: $(ansible_username) 
-              ansible_ssh_pass: $(ansible_ssh_pass)
-              registry_username: $(registry_username)
-              registry_password: $(registry_password)
-              registry_url: $(registry_url)
-              hosts:
-              - 10.0.1.4            
-              - 10.0.1.5            
-
-
-
-# Continuous Delivery Process for Production Environment
-- stage: DeployToProduction
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-  jobs:
-  - deployment: production
-    displayName: Deploy to Production
-    environment:
-      name: production.prd-ansibleVM
-      resourceType: VirtualMachine
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - template: tools/ansible.yml
-            parameters:
-              pghost: $(prd_pghost)
-              pg_username: $(pg_username)
-              pg_password: $(pg_password)
-              lb_ip: $(prd_LB_ip)
-              okta_url: $(okta_url)
-              okta_client_id: $(okta_client_id)
-              okta_client_secret: $(okta_client_secret)
-              ansible_username: $(ansible_username) 
-              ansible_ssh_pass: $(ansible_ssh_pass)
-              registry_username: $(registry_username)
-              registry_password: $(registry_password)
-              registry_url: $(registry_url)
-              hosts:
-              - 10.0.1.4            
-              - 10.0.1.5      
-              - 10.0.1.6      
+          - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+            displayName: connect to cluster
+          # - template: tools/kubernetesPipeline.yml
+          #   parameters:
+          #     pghost: $(stg_pghost)
+          #     pg_username: $(pg_username)
+          #     pg_password: $(pg_password)
+          #     LB_ip: $(stg_LB_ip)
+          #     okta_url: $(okta_url)
+          #     okta_client_id: $(okta_client_id)
+          #     okta_client_secret: $(okta_client_secret)
+          #     ansible_username: $(ansible_username) 
+          #     ansible_ssh_pass: $(ansible_ssh_pass)
+          #     registry_username: $(registry_username)
+          #     registry_password: $(registry_password)
+          #     registry_url: $(registry_url)
+          #     hosts:
+          #     - 10.0.1.4            
+          #     - 10.0.1.5            
