@@ -27,3 +27,8 @@ spec:
         name: webapp
       imagePullSecrets:
       - name: regcred
+      env:
+      - name: DEMO_GREETING
+        value: "Hello from the environment"
+      - name: DEMO_FAREWELL
+        value: "Such a sweet sorrow"
