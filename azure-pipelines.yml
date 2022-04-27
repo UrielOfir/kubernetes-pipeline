@@ -69,5 +69,8 @@ stages:
           - task: Kubernetes@1
             displayName: kubectl apply using arguments
             inputs:
+              azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+              azureResourceGroup: $(azureResourceGroup)
+              kubernetesCluster: $(kubernetesCluster) 
               command: apply
               arguments: -f kubernetes.yaml
