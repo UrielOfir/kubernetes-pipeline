@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: v1
 kind: Secret
 metadata:
   name: regcred
@@ -6,7 +6,7 @@ type: kubernetes.io/dockerconfigjson
 data:
   .dockerconfigjson: eyJhdXRocyI6eyJ3ZWlnaHR0cmFja2VyLmF6dXJlY3IuaW8iOnsidXNlcm5hbWUiOiJ3ZWlnaHR0cmFja2VyIiwicGFzc3dvcmQiOiJ3ZWlnaHR0cmFja2VyIiwiYXV0aCI6ImQyVnBaMmgwZEhKaFkydGxjanAzWldsbmFIUjBjbUZqYTJWeSJ9fX0=
 ---
-apiVersion: apps/v1
+apiVersion: v1
 kind: Deployment
 metadata:
   name: webapp
@@ -28,7 +28,5 @@ spec:
       imagePullSecrets:
       - name: regcred
       env:
-      - name: DEMO_GREETING
-        value: "Hello from the environment"
-      - name: DEMO_FAREWELL
-        value: "Such a sweet sorrow"
+      - name: OKTA_ORG_URL
+        value: https://github.com/
