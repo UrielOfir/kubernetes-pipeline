@@ -1,11 +1,3 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: regcred
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: eyJhdXRocyI6eyJ3ZWlnaHR0cmFja2VyLmF6dXJlY3IuaW8iOnsidXNlcm5hbWUiOiJ3ZWlnaHR0cmFja2VyIiwicGFzc3dvcmQiOiJ3ZWlnaHR0cmFja2VyIiwiYXV0aCI6ImQyVnBaMmgwZEhKaFkydGxjanAzWldsbmFIUjBjbUZqYTJWeSJ9fX0=
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,11 +15,35 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: weighttrackeruriel.azurecr.io/weight-tracker
-        name: webapp
+      - image: weighttracker.azurecr.io/weight-tracker
+        name: weight-tracker
         env:
-        - name: OKTA_ORG_URL
-          value: https://github.com/
+        - name:  PORT
+          value: "8080"
+        - name:  HOST
+          value: "0.0.0.0"
+        - name:  PGHOST
+          value: https://github.com/UrielOfir
+        - name:  PGUSERNAME
+          value: https://github.com/UrielOfir
+        - name:  PGDATABASE
+          value: https://github.com/UrielOfir
+        - name:  PGPASSWORD
+          value: https://github.com/UrielOfir
+        - name:  PGPORT
+          value: https://github.com/UrielOfir
+        - name:  HOST_URL
+          value: https://github.com/UrielOfir
+        - name:  COOKIE_ENCRYPT_PWD
+          value: https://github.com/UrielOfir
+        - name:  NODE_ENV
+          value: https://github.com/UrielOfir
+        - name:  OKTA_ORG_URL
+          value: https://github.com/UrielOfir
+        - name:  OKTA_CLIENT_ID
+          value: https://github.com/UrielOfir
+        - name:  OKTA_CLIENT_SECRET
+          value: https://github.com/UrielOfir
       imagePullSecrets:
       - name: regcred
       

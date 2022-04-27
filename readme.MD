@@ -4,6 +4,10 @@
 2. kuberenetes service
 echo {"auths":{"weighttracker.azurecr.io":{"username":"weighttracker","password":"weighttracker","auth":"d2VpZ2h0dHJhY2tlcjp3ZWlnaHR0cmFja2Vy"}}} | base64
 
+if kubectl get secret <name> !=0
+then
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-password>
+
 
 
 
