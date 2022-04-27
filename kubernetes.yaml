@@ -24,29 +24,78 @@ spec:
               name: env
               key: PORT
         - name:  HOST
-          value: "0.0.0.0"
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: HOST
         - name:  PGHOST
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGHOST
         - name:  PGUSERNAME
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGUSERNAME
         - name:  PGDATABASE
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGDATABASE
         - name:  PGPASSWORD
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPASSWORD
         - name:  PGPORT
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPORT
         - name:  HOST_URL
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: HOST_URL
         - name:  COOKIE_ENCRYPT_PWD
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: COOKIE_ENCRYPT_PWD
         - name:  NODE_ENV
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: NODE_ENV
         - name:  OKTA_ORG_URL
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_ORG_URL
         - name:  OKTA_CLIENT_ID
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_CLIENT_ID
         - name:  OKTA_CLIENT_SECRET
-          value: https://github.com/UrielOfir
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: OKTA_CLIENT_SECRET
       imagePullSecrets:
       - name: regcred
+
+      ---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: dogs-service
+spec:
+  selector:
+    app: dogs
+  ports:
+    - port: 5678
+
       

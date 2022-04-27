@@ -46,23 +46,33 @@ stages:
       runOnce:
         deploy:
           steps:
-          # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
-          #   displayName: connect to cluster
+          - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+            displayName: connect to cluster
 
-          # - powershell: |
-          #     if (kubectl get secret regcred){
-          #       kubectl delete secret regcred
-          #     }
-          #     kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
-          #   displayName: create secret regcred
+          - powershell: |
+              if (kubectl get secret regcred){
+                kubectl delete secret regcred
+              }
+              kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
+            displayName: create secret regcred
 
-          # - powershell: |
-          #     if (kubectl get secret env){
-          #       kubectl delete secret env
-          #     }
-          #     kubectl create secret generic env `
-          #     --from-literal=PORT=8080
-          #   displayName: create env
+          - powershell: |
+              if (kubectl get secret env){
+                kubectl delete secret env
+              }
+              kubectl create secret generic env `
+              --from-literal=PORT=8080 `
+              --from-literal=PGHOST=$(pg_host) `
+              --from-literal=PGUSERNAME=$(pg_username) `
+              --from-literal=PGDATABASE=postgres `
+              --from-literal=PGPASSWORD=$(pg_password) `
+              --from-literal=PGPORT=5432 `
+              --from-literal=HOST_URL=$(host_url) `
+              --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
+              --from-literal=OKTA_ORG_URL=$(okta_org_url) `
+              --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
+              --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret) ` 
+            displayName: create env
 
           - powershell: kubectl apply -f kubernetes.yaml
             displayName: apply kubernetes yaml  
