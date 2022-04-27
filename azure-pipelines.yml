@@ -7,7 +7,7 @@ trigger:
 pool: default
 
 variables: 
-- group: docker_vars
+- group: common
 
 stages:
 
