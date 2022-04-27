@@ -49,7 +49,10 @@ stages:
           # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
           #   displayName: connect to cluster
 
-          - script: |
+          - powershell: |
+              if (kubectl get secret regcred){
+                kubectl delete secret regcred
+              }
               kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
             displayName: create secret regcred
 
