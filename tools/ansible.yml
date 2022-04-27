@@ -1,0 +1,62 @@
+parameters:
+- name: pghost
+- name: pg_username
+- name: pg_password
+- name: LB_ip
+- name: okta_url
+- name: okta_client_id
+- name: okta_client_secret
+- name: ansible_username
+- name: ansible_ssh_pass
+- name: registry_username
+- name: registry_password
+- name: registry_url
+- name: hosts
+  type: object
+  
+
+steps:
+
+- script: |
+    if ! command -v ansible
+    then  
+      sudo apt update;
+      sudo apt install software-properties-common --yes;
+      sudo add-apt-repository --yes --update ppa:ansible/ansible;
+      sudo apt install ansible --yes;
+    fi
+  displayName: install ansible if needed
+
+- script: |
+    rm -rf dockerAnsible
+    git clone https://github.com/UrielOfir/dockerAnsible.git
+  displayName: clone ansible repo
+
+- ${{ each host in parameters.hosts }}:
+  - script: cd $(Build.SourcesDirectory)/dockerAnsible ; echo ${{host}} host=\"${{host}}\" >> inventory
+    displayName: add inventory
+
+- script: |
+    cd $(Build.SourcesDirectory)/dockerAnsible ;
+    echo "
+    ansible_connection: \"ssh\"
+    ansible_port: \"22\"
+    ansible_user: \"${{parameters.ansible_username}}\" 
+    ansible_ssh_pass: \"${{parameters.ansible_ssh_pass}}\"
+    pghost: \"${{parameters.pghost}}\"
+    pg_username: \"${{parameters.pg_username}}\"
+    pg_password: \"${{parameters.pg_password}}\"
+    LB_ip: \"${{parameters.LB_ip}}\"
+    okta_url: \"${{parameters.okta_url}}\"
+    okta_client_id: \"${{parameters.okta_client_id}}\"
+    okta_client_secret: \"${{parameters.okta_client_secret}}\"
+    registry_username: \"${{parameters.registry_username}}\"
+    registry_password: \"${{parameters.registry_password}}\" 
+    registry_url: \"${{parameters.registry_url}}\"
+    "> vars
+  displayName: add vars file
+
+- script: |
+    export ANSIBLE_HOST_KEY_CHECKING=False;
+    cd $(Build.SourcesDirectory)/dockerAnsible; ansible-playbook -i inventory weightTrackerPlayBook.yaml
+  displayName: run ansible
