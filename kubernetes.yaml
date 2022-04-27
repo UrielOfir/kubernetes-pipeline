@@ -17,36 +17,36 @@ spec:
       containers:
       - image: weighttracker.azurecr.io/weight-tracker
         name: weight-tracker
-        env:
+        # env:
         # - name:  PORT
         #   valueFrom:
         #     secretKeyRef:
         #       name: env
         #       key: PORT
-        - name:  HOST
-          value: "0.0.0.0"
-        - name:  PGHOST
-          value: https://github.com/UrielOfir
-        - name:  PGUSERNAME
-          value: https://github.com/UrielOfir
-        - name:  PGDATABASE
-          value: https://github.com/UrielOfir
-        - name:  PGPASSWORD
-          value: https://github.com/UrielOfir
-        - name:  PGPORT
-          value: https://github.com/UrielOfir
-        - name:  HOST_URL
-          value: https://github.com/UrielOfir
-        - name:  COOKIE_ENCRYPT_PWD
-          value: https://github.com/UrielOfir
-        - name:  NODE_ENV
-          value: https://github.com/UrielOfir
-        - name:  OKTA_ORG_URL
-          value: https://github.com/UrielOfir
-        - name:  OKTA_CLIENT_ID
-          value: https://github.com/UrielOfir
-        - name:  OKTA_CLIENT_SECRET
-          value: https://github.com/UrielOfir
+        # - name:  HOST
+        #   value: "0.0.0.0"
+        # - name:  PGHOST
+        #   value: https://github.com/UrielOfir
+        # - name:  PGUSERNAME
+        #   value: https://github.com/UrielOfir
+        # - name:  PGDATABASE
+        #   value: https://github.com/UrielOfir
+        # - name:  PGPASSWORD
+        #   value: https://github.com/UrielOfir
+        # - name:  PGPORT
+        #   value: https://github.com/UrielOfir
+        # - name:  HOST_URL
+        #   value: https://github.com/UrielOfir
+        # - name:  COOKIE_ENCRYPT_PWD
+        #   value: https://github.com/UrielOfir
+        # - name:  NODE_ENV
+        #   value: https://github.com/UrielOfir
+        # - name:  OKTA_ORG_URL
+        #   value: https://github.com/UrielOfir
+        # - name:  OKTA_CLIENT_ID
+        #   value: https://github.com/UrielOfir
+        # - name:  OKTA_CLIENT_SECRET
+        #   value: https://github.com/UrielOfir
       imagePullSecrets:
       - name: regcred
       
