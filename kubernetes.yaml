@@ -1,11 +1,10 @@
 apiVersion: apps/v1
 kind: Secret
 metadata:
-  name: registry-credentials
-type: Opaque
+  name: regcred
+type: kubernetes.io/dockerconfigjson
 data:
-  username: YWRtaW4=
-  password: MWYyZDFlMmU2N2Rm
+  .dockerconfigjson: eyJhdXRocyI6eyJ3ZWlnaHR0cmFja2VyLmF6dXJlY3IuaW8iOnsidXNlcm5hbWUiOiJ3ZWlnaHR0cmFja2VyIiwicGFzc3dvcmQiOiJ3ZWlnaHR0cmFja2VyIiwiYXV0aCI6ImQyVnBaMmgwZEhKaFkydGxjanAzWldsbmFIUjBjbUZqYTJWeSJ9fX0=
 ---
 apiVersion: apps/v1
 kind: Deployment
