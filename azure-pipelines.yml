@@ -46,10 +46,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
-            displayName: connect to cluster
+          # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+          #   displayName: connect to cluster
 
-          - script: kubectl apply -f .
+          - script: kubectl apply -f kubernetes.yaml
             displayName: apply kubernetes yaml
           # - template: tools/kubernetesPipeline.yml
           #   parameters:
