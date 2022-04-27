@@ -11,7 +11,7 @@ variables:
 
 stages:
 
-Continuous Integration Process
+# Continuous Integration Process
 - stage: CI
   jobs:
   - job: BuildAndPushDocker
