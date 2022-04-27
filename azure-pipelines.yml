@@ -61,7 +61,7 @@ stages:
                 kubectl delete secret env
               }
               kubectl create secret generic env `
-              --from-literal=PORT=8080 `
+              --from-literal=PORT=8080
             displayName: create env
 
           - script: kubectl apply -f kubernetes.yaml
