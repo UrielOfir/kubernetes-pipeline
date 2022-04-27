@@ -48,6 +48,7 @@ stages:
           steps:
           # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
           #   displayName: connect to cluster
+          - bash: echo check
 
           - powershell: |
               if (kubectl get secret regcred){
@@ -56,11 +57,11 @@ stages:
               kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
             displayName: create secret regcred
 
-          - script: |
+          - powershell: |
               if (kubectl get secret env){
                 kubectl delete secret env
               }
-              kubectl create secret generic env
+              kubectl create secret generic env --from-literal=username=devuser
 
 
             displayName: create env
