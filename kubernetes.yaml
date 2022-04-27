@@ -18,41 +18,38 @@ spec:
       - image: weighttracker.azurecr.io/weight-tracker
         name: weight-tracker
         env:
-        # - name: PORT
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PORT
-        # - name: HOST
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: HOST
-        # - name: PGHOST
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGHOST
-        # - name: PGUSERNAME
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGUSERNAME
-        # - name: PGDATABASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGDATABASE
-        # - name: PGPASSWORD
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGPASSWORD
-        # - name: PGPORT
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: env
-        #       key: PGPORT
+        - name: PORT
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PORT
+        - name: HOST
+          value: 0.0.0.0
+        - name: PGHOST
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGHOST
+        - name: PGUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGUSERNAME
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGDATABASE
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPASSWORD
+        - name: PGPORT
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PGPORT
         - name: HOST_URL
           valueFrom:
             secretKeyRef:
