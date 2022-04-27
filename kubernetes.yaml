@@ -47,6 +47,6 @@ spec:
         #   value: https://github.com/UrielOfir
         # - name:  OKTA_CLIENT_SECRET
         #   value: https://github.com/UrielOfir
-      # imagePullSecrets:
-      # - name: regcred
+      imagePullSecrets:
+      - name: regcred
       
