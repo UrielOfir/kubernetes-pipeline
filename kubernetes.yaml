@@ -5,7 +5,7 @@ metadata:
   labels:
     app: webapp
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: webapp
@@ -85,10 +85,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: dogs-service
+  name: webapp-service
 spec:
   selector:
-    app: dogs
+    app: webapp
   ports:
     - port: 5678
 

@@ -13,6 +13,6 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: dogs-service
+              name: webapp-service
               port:
                 number: 8080
