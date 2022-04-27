@@ -46,8 +46,8 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
-            displayName: connect to cluster
+          # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
+          #   displayName: connect to cluster
 
           - powershell: |
               if (kubectl get secret regcred){
