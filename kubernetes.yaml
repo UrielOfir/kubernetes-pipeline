@@ -90,6 +90,6 @@ spec:
   selector:
     app: webapp
   ports:
-    - port: 5678
+    - port: 8080
 
       
