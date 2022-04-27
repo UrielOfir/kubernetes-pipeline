@@ -64,5 +64,10 @@ stages:
           #     --from-literal=PORT=8080
           #   displayName: create env
 
-          - powershell: kubectl apply -f .\kubernetes.yaml
-            displayName: apply kubernetes yaml  
+          # - powershell: kubectl apply -f .\kubernetes.yaml
+          #   displayName: apply kubernetes yaml  
+          - task: Kubernetes@1
+            displayName: kubectl apply using arguments
+            inputs:
+              command: apply
+              arguments: -f kubernetes.yaml
