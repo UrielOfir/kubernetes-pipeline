@@ -48,7 +48,6 @@ stages:
           steps:
           # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
           #   displayName: connect to cluster
-          - bash: echo check
 
           - powershell: |
               if (kubectl get secret regcred){
@@ -61,9 +60,8 @@ stages:
               if (kubectl get secret env){
                 kubectl delete secret env
               }
-              kubectl create secret generic env --from-literal=username=devuser
-
-
+              kubectl create secret generic env `
+              --from-literal=PORT=8080 `
             displayName: create env
 
           - script: kubectl apply -f kubernetes.yaml

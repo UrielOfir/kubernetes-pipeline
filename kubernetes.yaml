@@ -19,7 +19,10 @@ spec:
         name: weight-tracker
         env:
         - name:  PORT
-          value: "8080"
+          valueFrom:
+            secretKeyRef:
+              name: env
+              key: PORT
         - name:  HOST
           value: "0.0.0.0"
         - name:  PGHOST
