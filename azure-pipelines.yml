@@ -49,37 +49,20 @@ stages:
           # - script: az aks get-credentials --resource-group $(cluster_resource_group) --name $(cluster_name)
           #   displayName: connect to cluster
 
-          - powershell: |
-              if (kubectl get secret regcred){
-                kubectl delete secret regcred
-              }
-              kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
-            displayName: create secret regcred
+          # - powershell: |
+          #     if (kubectl get secret regcred){
+          #       kubectl delete secret regcred
+          #     }
+          #     kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
+          #   displayName: create secret regcred
 
-          - powershell: |
-              if (kubectl get secret env){
-                kubectl delete secret env
-              }
-              kubectl create secret generic env `
-              --from-literal=PORT=8080
-            displayName: create env
+          # - powershell: |
+          #     if (kubectl get secret env){
+          #       kubectl delete secret env
+          #     }
+          #     kubectl create secret generic env `
+          #     --from-literal=PORT=8080
+          #   displayName: create env
 
           - powershell: kubectl apply -f kubernetes.yaml
-            displayName: apply kubernetes yaml
-          # - template: tools/kubernetesPipeline.yml
-          #   parameters:
-          #     pghost: $(stg_pghost)
-          #     pg_username: $(pg_username)
-          #     pg_password: $(pg_password)
-          #     LB_ip: $(stg_LB_ip)
-          #     okta_url: $(okta_url)
-          #     okta_client_id: $(okta_client_id)
-          #     okta_client_secret: $(okta_client_secret)
-          #     ansible_username: $(ansible_username) 
-          #     ansible_ssh_pass: $(ansible_ssh_pass)
-          #     registry_username: $(registry_username)
-          #     registry_password: $(registry_password)
-          #     registry_url: $(registry_url)
-          #     hosts:
-          #     - 10.0.1.4            
-          #     - 10.0.1.5            
+            displayName: apply kubernetes yaml  
