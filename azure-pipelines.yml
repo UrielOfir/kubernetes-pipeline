@@ -46,12 +46,12 @@ stages:
       runOnce:
         deploy:
           steps:
-          # - powershell: |
-          #     if (kubectl get secret regcred){
-          #       kubectl delete secret regcred
-          #     }
-          #     kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
-          #   displayName: create secret regcred
+          - powershell: |
+              if (kubectl get secret regcred){
+                kubectl delete secret regcred
+              }
+              kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
+            displayName: create secret regcred
 
           - powershell: |
               kubectl delete secret env
