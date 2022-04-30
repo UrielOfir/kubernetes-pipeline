@@ -39,8 +39,8 @@ stages:
 - stage: DeployToKubernetes
   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
-  - deployment: staging
-    displayName: Deploy to Staging
+  - deployment: kubernetes
+    displayName: Deploy to kubernetes
     environment: pool
     strategy:
       runOnce:
