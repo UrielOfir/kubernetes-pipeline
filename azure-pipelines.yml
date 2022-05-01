@@ -56,7 +56,7 @@ stages:
                   displayName: deploy ingress controller
 
                 - powershell: |
-                    # kubectl delete secret env
+                    kubectl delete secret env
                     kubectl create secret generic env `
                       --from-literal=PORT=8080 `
                       --from-literal=PGHOST=$(pg_host) `
@@ -65,7 +65,7 @@ stages:
                       --from-literal=PGPASSWORD=$(pg_password) `
                       --from-literal=PGPORT=5432 `
                       --from-literal=HOST_URL=$(host_url) `
-                      --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
+                      --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd)
 
                   displayName: create env
 
