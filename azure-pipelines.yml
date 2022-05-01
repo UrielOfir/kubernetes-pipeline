@@ -72,13 +72,14 @@ stages:
                   displayName: create env
 
                 - powershell: |
-                  kubectl delete configmap oktadata 
-                  kubectl create configmap oktadata `
-                  --from-literal=HOST_URL=http://20.232.83.161
-                  --from-literal=OKTA_ORG_URL=https://dev-62128700.okta.com
-                  --from-literal=OKTA_CLIENT_ID="0oa42isso27JG2MGA5d7"
-                  --from-literal=OKTA_CLIENT_SECRET="5qhjwBPAKTfUi4TLzmDrSNUocAxaKPRNQhOfP2P2"
-                  --from-literal=HOST_URL="http://20.232.83.161"
+                    kubectl delete configmap oktadata 
+                    kubectl create configmap oktadata `
+                    --from-literal=HOST_URL=http://20.232.83.161
+                    --from-literal=OKTA_ORG_URL=https://dev-62128700.okta.com
+                    --from-literal=OKTA_CLIENT_ID="0oa42isso27JG2MGA5d7"
+                    --from-literal=OKTA_CLIENT_SECRET="5qhjwBPAKTfUi4TLzmDrSNUocAxaKPRNQhOfP2P2"
+                    --from-literal=HOST_URL="http://20.232.83.161"
+                  displayName: create oktadata configmap
 
                 - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
                   displayName: apply kubernetes yaml
