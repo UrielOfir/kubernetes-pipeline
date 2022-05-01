@@ -1,76 +1,84 @@
 name: Docker pipeline
 
 trigger:
-- master
-- feature/*
+  - master
+  - feature/*
 
 pool: default
 
-variables: 
-- group: common
+variables:
+  - group: common
 
 stages:
-
-# Continuous Integration Process
-- stage: CI
-  jobs:
-  - job: BuildAndPushDocker
-    workspace: 
-      clean: all
-    steps:
-    - powershell: |
-        if ( docker images $(registry_url)/weight-tracker -q )
-        {
-          docker rmi $(docker images  $(registry_url)/weight-tracker -q)
-        }
-      displayName: remove previous docker images
-
-    - script: docker build -t $(registry_url)/weight-tracker:latest .
-      displayName: Build an image
-
-    - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
-      displayName: connect to azure container registry
-    
-    - script: docker push $(registry_url)/weight-tracker:latest
-      condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-      displayName: Push the image to ther docker hub repository
-
-# Continuous Deployment Process for Staging Environment
-- stage: DeployToKubernetes
-  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-  jobs:
-  - deployment: kubernetes
-    displayName: Deploy to kubernetes
-    environment: pool
-    strategy:
-      runOnce:
-        deploy:
-          steps:
+  # Continuous Integration Process
+  - stage: CI
+    jobs:
+      - job: BuildAndPushDocker
+        workspace:
+          clean: all
+        steps:
           - powershell: |
-              if (kubectl get secret regcred){
-                kubectl delete secret regcred
+              if ( docker images $(registry_url)/weight-tracker -q )
+              {
+                docker rmi $(docker images  $(registry_url)/weight-tracker -q)
               }
-              kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
-            displayName: create secret regcred
+            displayName: remove previous docker images
 
-          - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
-            displayName: deploy ingress controller 
+          - script: docker build -t $(registry_url)/weight-tracker:latest .
+            displayName: Build an image
 
-          - powershell: |
-              kubectl delete secret env
-              kubectl create secret generic env `
-                --from-literal=PORT=8080 `
-                --from-literal=PGHOST=$(pg_host) `
-                --from-literal=PGUSERNAME=$(pg_username) `
-                --from-literal=PGDATABASE=postgres `
-                --from-literal=PGPASSWORD=$(pg_password) `
-                --from-literal=PGPORT=5432 `
-                --from-literal=HOST_URL=$(host_url) `
-                --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
-                --from-literal=OKTA_ORG_URL=$(okta_org_url) `
-                --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
-                --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
-            displayName: create env
+          - script: docker login -u $(registry_username) -p $(registry_password) $(registry_url)
+            displayName: connect to azure container registry
 
-          - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
-            displayName: apply kubernetes yaml  
+          - script: docker push $(registry_url)/weight-tracker:latest
+            condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+            displayName: Push the image to ther docker hub repository
+
+  # Continuous Deployment Process for Staging Environment
+  - stage: DeployToKubernetes
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    jobs:
+      - deployment: kubernetes
+        displayName: Deploy to kubernetes
+        environment: pool
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - powershell: |
+                    if (kubectl get secret regcred){
+                      kubectl delete secret regcred
+                    }
+                    kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
+                  displayName: create secret regcred
+
+                - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+                  displayName: deploy ingress controller
+
+                - powershell: |
+                    kubectl delete secret env
+                    kubectl create secret generic env `
+                      --from-literal=PORT=8080 `
+                      --from-literal=PGHOST=$(pg_host) `
+                      --from-literal=PGUSERNAME=$(pg_username) `
+                      --from-literal=PGDATABASE=postgres `
+                      --from-literal=PGPASSWORD=$(pg_password) `
+                      --from-literal=PGPORT=5432 `
+                      --from-literal=HOST_URL=$(host_url) `
+                      --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
+                      --from-literal=OKTA_ORG_URL=$(okta_org_url) `
+                      --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
+                      --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
+                  displayName: create env
+
+                - powershell: |
+                  kubectl delete configmap oktadata 
+                  kubectl create configmap oktadata `
+                  --from-literal=HOST_URL=http://20.232.83.161
+                  --from-literal=OKTA_ORG_URL=https://dev-62128700.okta.com
+                  --from-literal=OKTA_CLIENT_ID="0oa42isso27JG2MGA5d7"
+                  --from-literal=OKTA_CLIENT_SECRET="5qhjwBPAKTfUi4TLzmDrSNUocAxaKPRNQhOfP2P2"
+                  --from-literal=HOST_URL="http://20.232.83.161"
+
+                - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
+                  displayName: apply kubernetes yaml

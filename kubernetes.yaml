@@ -54,8 +54,8 @@ spec:
               key: PGPORT
         - name: HOST_URL
           valueFrom:
-            secretKeyRef:
-              name: env
+            configMapKeyRef:
+              name: oktadata
               key: HOST_URL
         - name:  COOKIE_ENCRYPT_PWD
           valueFrom:
@@ -66,18 +66,18 @@ spec:
           value: development 
         - name:  OKTA_ORG_URL
           valueFrom:
-            secretKeyRef:
-              name: env
+            configMapKeyRef:
+              name: oktadata
               key: OKTA_ORG_URL
         - name: OKTA_CLIENT_ID
           valueFrom:
-            secretKeyRef:
-              name: env
+            configMapKeyRef:
+              name: oktadata
               key: OKTA_CLIENT_ID
         - name: OKTA_CLIENT_SECRET
           valueFrom:
-            secretKeyRef:
-              name: env
+            configMapKeyRef:
+              name: oktadata
               key: OKTA_CLIENT_SECRET
       imagePullSecrets:
       - name: regcred
