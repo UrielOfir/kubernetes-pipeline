@@ -80,3 +80,9 @@ stages:
 
                 - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
                   displayName: apply kubernetes yaml
+
+                - bash: kubectl get ingress | awk 'FNR == 2 {print $4}
+                  displayName: get ingress ip
+                  outputs:
+                    - name: ingress_ip
+                      value: $ingress_ip

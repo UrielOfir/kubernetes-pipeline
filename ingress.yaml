@@ -7,8 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: weighttrackerapp1.eastus.cloudapp.azure.com
-    http:
+  - http:
       paths:
         - path: /
           pathType: Prefix
