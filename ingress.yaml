@@ -7,11 +7,12 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  -  http:
+  - host: weighttracker.eastus.cloudapp.azure.com
+    http:
       paths:
         - path: /
           pathType: Prefix
-          backend:
+          backend: 
             service:
               name: webapp-service
               port:
