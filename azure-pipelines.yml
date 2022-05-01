@@ -66,19 +66,16 @@ stages:
                       --from-literal=PGPORT=5432 `
                       --from-literal=HOST_URL=$(host_url) `
                       --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd) `
-                      --from-literal=OKTA_ORG_URL=$(okta_org_url) `
-                      --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
-                      --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
+
                   displayName: create env
 
                 - powershell: |
                     kubectl delete configmap oktadata 
                     kubectl create configmap oktadata `
-                    --from-literal=HOST_URL=http://20.232.83.161
-                    --from-literal=OKTA_ORG_URL=https://dev-62128700.okta.com
-                    --from-literal=OKTA_CLIENT_ID="0oa42isso27JG2MGA5d7"
-                    --from-literal=OKTA_CLIENT_SECRET="5qhjwBPAKTfUi4TLzmDrSNUocAxaKPRNQhOfP2P2"
-                    --from-literal=HOST_URL="http://20.232.83.161"
+                    --from-literal=HOST_URL=$(host_url) `
+                    --from-literal=OKTA_ORG_URL=$(okta_org_url) `
+                    --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
+                    --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
                   displayName: create oktadata configmap
 
                 - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
