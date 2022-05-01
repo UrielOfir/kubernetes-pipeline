@@ -1,4 +1,4 @@
-name: Docker pipeline
+name: Kubernetes pipeline
 
 trigger:
   - master
