@@ -53,6 +53,9 @@ stages:
               kubectl create secret docker-registry regcred --docker-server=$(registry_url) --docker-username=$(registry_username) --docker-password=$(registry_password)
             displayName: create secret regcred
 
+          - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+            displayName: deploy ingress controller 
+
           - powershell: |
               kubectl delete secret env
               kubectl create secret generic env `
@@ -69,5 +72,5 @@ stages:
                 --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
             displayName: create env
 
-          - powershell: kubectl apply -f kubernetes.yaml
+          - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
             displayName: apply kubernetes yaml  
