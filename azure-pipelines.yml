@@ -78,7 +78,7 @@ stages:
                     --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
                   displayName: create oktadata configmap
 
-                - powershell: kubectl apply -f kubernetes.yaml -f ingress.yaml
+                - powershell: kubectl apply -f ingress.yaml
                   displayName: apply kubernetes yaml
 
                 # - bash: kubectl get ingress | awk 'FNR == 2 {print $4}
