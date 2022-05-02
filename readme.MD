@@ -15,17 +15,11 @@ It must be powershell agent.
 Add this variables:
     
     ```
-    `ansible_ssh_pass` (password for the VMs that runs the app)
-    `ansible_username`
-    `stg_LB_ip` (LB= load balancer)
-    `prd_LB_ip`
     `okta_client_id`
     `okta_client_secret`
     `okta_url`
     `pg_password` (pg= postgresql)
     `pg_username`
-    `stg_pghost` (dns name of the postgresql server)
-    `prd_pghost` (dns name of the postgresql server)
     `registry_url` (url of the container registry)
     `registry_username`
     `registry_password`

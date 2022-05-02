@@ -62,8 +62,12 @@ stages:
                   displayName: apply db yaml
   
                 - powershell: |
-                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
+                    kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
+                  displayName: get IP
+                - powershell: |
+                    kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 2  -outvariable pg_ip
+                    Write-Host "##vso[task.setvariable variable=pg_ip;]$pg_ip"
                   displayName: get IP
 
                 - powershell: |
@@ -71,7 +75,7 @@ stages:
                     kubectl delete secret env
                     kubectl create secret generic env `
                       --from-literal=PORT=8080 `
-                      --from-literal=PGHOST=$(pg_host) `
+                      --from-literal=PGHOST=$(pg_ip) `
                       --from-literal=PGUSERNAME=$(pg_username) `
                       --from-literal=PGDATABASE=postgres `
                       --from-literal=PGPASSWORD=$(pg_password) `
@@ -88,3 +92,6 @@ stages:
                     --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
                     --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
                   displayName: create oktadata configmap
+
+                - powershell: kubectl apply -f weightTrackerApp.yaml
+                  displayName: apply weightTrackerApp yaml
