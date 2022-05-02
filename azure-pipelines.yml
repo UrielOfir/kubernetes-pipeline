@@ -56,15 +56,17 @@ stages:
                   displayName: deploy ingress controller
   
                 - powershell: |
-                    Timeout /T 30
+                    Timeout /T 30;
                     kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
 
                 - powershell: kubectl apply -f db.yaml
                   displayName: apply db yaml
-  
+                 - task: Delay@1
+                   inputs:
+                   delayForMinutes: 0.5   
+              
                 - powershell: |
-                    Timeout /T 30
                     kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
