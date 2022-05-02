@@ -57,6 +57,9 @@ stages:
   
                 - powershell: kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
+
+                - powershell: kubectl apply -f db.yaml
+                  displayName: apply db yaml
   
                 - powershell: |
                     kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
@@ -64,6 +67,7 @@ stages:
                   displayName: get IP
 
                 - powershell: |
+                    Timeout /T 30
                     kubectl delete secret env
                     kubectl create secret generic env `
                       --from-literal=PORT=8080 `

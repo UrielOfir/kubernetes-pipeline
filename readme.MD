@@ -1,40 +1,17 @@
 
 # Node.js Weight Tracker
-1. container registery
-2. kuberenetes service
-
-
-Write-Output "Timeout is for 10 seconds"
-Timeout /T 10
-Write-Output "This line will be executed after 10 seconds if not interuptted"
-
-
-
-
-
-
-
-
-
-
 ## How to run this Azure Devops repository?
-This repository builds a docker images and run it on staging and production environments by this ansible code:
-https://github.com/UrielOfir/dockerAnsible.
 
 1. You need to build the enviroment with this Terraform module-
-https://github.com/UrielOfir/Terraform
+https://github.com/UrielOfir/terraform-kubernetes
 
 2. Then you need to [add an azure devops agent to the deafult agent pool](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops#azure-pipelines).
-It must be linux agent.
+It must be powershell agent.
 
-You also must have an Azure container registry! 
+3. You need to connect your agent machine to the kuberntes cluster with azure-cli:
+`az aks get-credentials --resource-group kubernetes-resources --name kubernetes-aks1`
 
-3. Add to your pipline two enviroments: `staging` and `deployment`.  
-In each enviroment add an agent on the ansible machine of your azure cloud enviroment.
-
-4. On the deployment enviroment add a manual approval.  
-
-4. On your Azure DevOps project library, add a variable group called `ansible`.
+4. On your Azure DevOps project library, add a variable group called `common`.
 Add this variables:
     
     ```
@@ -53,16 +30,7 @@ Add this variables:
     `registry_username`
     `registry_password`
     ```
-The code works for staging enviroment with two servers,
-where the servers IPs are: 10.0.1.4 and 10.0.1.5.  
-In the proudction enviroment there are three servers with IPs: 10.0.1.4, 10.0.1.5, 10.0.1.6.  
-To change the hosts IPs you need to change the `hosts` in the file `azure-pipelines.yml` at `template: tools/ansible.yml`.
 ***
-
-## Use docker compose on your local machine
-To run this app with your local machine you need to add `.env` file to the root of the project. (you can see the instructions for `.env` file [here](https://developer.okta.com/blog/2020/06/01/node-postgres-weight-tracker)).  
-Then you can run the command `docker-compose up`, and the app will be running on your local machine at port `127.0.0.1:40000`.
-
 
 ## About the app
 
