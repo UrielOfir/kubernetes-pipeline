@@ -56,7 +56,7 @@ stages:
                   displayName: deploy ingress controller
   
                 - powershell: |
-                    Timeout /T 30;
+                    Start-Sleep -Seconds 30
                     kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
 
