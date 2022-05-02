@@ -57,7 +57,7 @@ stages:
   
                 - powershell: Start-Sleep -Seconds 30
                   displayName: wait 30 seconds
-                                  
+
                 - powershell: |
                     kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
@@ -67,7 +67,7 @@ stages:
               
                 - powershell: |
                     Start-Sleep -Seconds 30
-                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
+                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 2 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
                 - powershell: |
