@@ -55,8 +55,10 @@ stages:
                 - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                   displayName: deploy ingress controller
   
+                - powershell: Start-Sleep -Seconds 30
+                  displayName: wait 30 seconds
+                                  
                 - powershell: |
-                    Start-Sleep -Seconds 30
                     kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
 
