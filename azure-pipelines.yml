@@ -55,8 +55,8 @@ stages:
                 - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                   displayName: deploy ingress controller
 
-                - powershell: Start-Sleep -Seconds 50
-                  displayName: wait 50 seconds
+                - powershell: Start-Sleep -Seconds 30
+                  displayName: wait 30 seconds
 
                 - powershell: |
                     kubectl apply -f ingress.yaml
@@ -67,7 +67,7 @@ stages:
 
                 - powershell: |
                     $IP=""
-                    while !($IP -match $pattern) {
+                    while ($IP -notmatch $pattern) {
                       kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                        Write-Host "##vso[task.setvariable variable=IP;]$IP"
                        Start-Sleep -Seconds 3
@@ -76,7 +76,7 @@ stages:
                 
                 - powershell: |
                     $pg_ip=""
-                    while !($pg_ip -match $pattern) {
+                    while ($pg_ip -notmatch $pattern) {
                       kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 2  -outvariable pg_ip
                       Write-Host "##vso[task.setvariable variable=pg_ip;]$pg_ip"
                       Start-Sleep -Seconds 3
