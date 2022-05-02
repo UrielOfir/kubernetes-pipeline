@@ -3,23 +3,10 @@
 1. container registery
 2. kuberenetes service
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
 
-kubectl get ingress | awk 'FNR == 2 {print $4}
-
-Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1 | Write-Host "##vso[task.setvariable variable=IP;]$_"
-
-                    kubectl delete secret env
-                    kubectl create secret generic env `
-                      --from-literal=PORT=8080 `
-                      --from-literal=PGHOST=10.0.216.59 `
-                      --from-literal=PGUSERNAME=postgres `
-                      --from-literal=PGDATABASE=postgres `
-                      --from-literal=PGPASSWORD=p@ssw0rd42 `
-                      --from-literal=PGPORT=5432 `
-                      --from-literal=COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
-
-
+Write-Output "Timeout is for 10 seconds"
+Timeout /T 10
+Write-Output "This line will be executed after 10 seconds if not interuptted"
 
 
 
