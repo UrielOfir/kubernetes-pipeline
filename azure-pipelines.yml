@@ -62,12 +62,9 @@ stages:
 
                 - powershell: kubectl apply -f db.yaml
                   displayName: apply db yaml
-                 
-                - task: Delay@1
-                  inputs:
-                    delayForMinutes: 0.5   
               
                 - powershell: |
+                    Start-Sleep -Seconds 30
                     kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
