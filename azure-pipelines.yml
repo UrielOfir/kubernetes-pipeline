@@ -62,7 +62,7 @@ stages:
                   displayName: apply db yaml
   
                 - powershell: |
-                    kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
+                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
                 - powershell: |
