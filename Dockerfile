@@ -9,6 +9,6 @@ COPY . .
 
 EXPOSE 8080
 
-RUN npm run initidb
+RUN npm run initdb
 
 ENTRYPOINT npm run dev
