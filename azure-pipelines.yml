@@ -69,11 +69,11 @@ stages:
                   displayName: wait 30 seconds
 
                 - powershell: |
-                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 2 -outvariable IP;
+                    kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
                 - powershell: |
-                    kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3  -outvariable pg_ip
+                    kubectl get svc postgres-service | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 2  -outvariable pg_ip
                     Write-Host "##vso[task.setvariable variable=pg_ip;]$pg_ip"
                   displayName: get IP
 
