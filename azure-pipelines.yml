@@ -55,13 +55,16 @@ stages:
                 - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                   displayName: deploy ingress controller
   
-                - powershell: kubectl apply -f ingress.yaml
+                - powershell: |
+                    Timeout /T 30
+                    kubectl apply -f ingress.yaml
                   displayName: apply ingress yaml
 
                 - powershell: kubectl apply -f db.yaml
                   displayName: apply db yaml
   
                 - powershell: |
+                    Timeout /T 30
                     kubectl get ingress | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 3 -outvariable IP;
                     Write-Host "##vso[task.setvariable variable=IP;]$IP"
                   displayName: get IP
@@ -71,7 +74,6 @@ stages:
                   displayName: get IP
 
                 - powershell: |
-                    Timeout /T 30
                     kubectl delete secret env
                     kubectl create secret generic env `
                       --from-literal=PORT=8080 `

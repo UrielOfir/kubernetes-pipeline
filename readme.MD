@@ -2,6 +2,9 @@
 # Node.js Weight Tracker
 ## How to run this Azure Devops repository?
 
+kubectl delete po,ing,svc,pv,pvc,sc,ep,rc,deploy,replicaset,daemonset --all -A
+
+
 1. You need to build the enviroment with this Terraform module-
 https://github.com/UrielOfir/terraform-kubernetes
 
