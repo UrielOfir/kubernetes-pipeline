@@ -59,7 +59,7 @@ stages:
                   displayName: apply ingress yaml
   
                 - powershell: |
-                    Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1
+                    Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1 `
                     | Write-Host "##vso[task.setvariable variable=IP;]$_"
                   displayName: get IP
 
