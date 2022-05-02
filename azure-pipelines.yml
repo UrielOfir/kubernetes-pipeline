@@ -54,6 +54,14 @@ stages:
 
                 - script: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
                   displayName: deploy ingress controller
+  
+                - powershell: kubectl apply -f ingress.yaml
+                  displayName: apply ingress yaml
+  
+                - powershell: |
+                    Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1
+                    | Write-Host "##vso[task.setvariable variable=IP;]$_"
+                  displayName: get IP
 
                 - powershell: |
                     kubectl delete secret env
@@ -64,7 +72,6 @@ stages:
                       --from-literal=PGDATABASE=postgres `
                       --from-literal=PGPASSWORD=$(pg_password) `
                       --from-literal=PGPORT=5432 `
-                      --from-literal=HOST_URL=$(host_url) `
                       --from-literal=COOKIE_ENCRYPT_PWD=$(cookie_pwd)
 
                   displayName: create env
@@ -72,14 +79,8 @@ stages:
                 - powershell: |
                     kubectl delete configmap oktadata 
                     kubectl create configmap oktadata `
-                    --from-literal=HOST_URL=$(host_url) `
+                    --from-literal=HOST_URL="http://$(IP)" `
                     --from-literal=OKTA_ORG_URL=$(okta_org_url) `
                     --from-literal=OKTA_CLIENT_ID=$(okta_client_id) `
                     --from-literal=OKTA_CLIENT_SECRET=$(okta_client_secret)
                   displayName: create oktadata configmap
-
-                - powershell: kubectl apply -f ingress.yaml
-                  displayName: apply kubernetes yaml
-
-                # - bash: kubectl get ingress | awk 'FNR == 2 {print $4}
-                #   displayName: get ingress ip

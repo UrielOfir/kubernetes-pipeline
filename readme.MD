@@ -7,7 +7,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 kubectl get ingress | awk 'FNR == 2 {print $4}
 
-Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1
+Get-Content kubernetes.yaml | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split " "} | Select-Object -index 1 | Write-Host "##vso[task.setvariable variable=IP;]$_"
 
 
 
