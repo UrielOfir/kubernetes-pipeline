@@ -4,12 +4,13 @@
 
 kubectl delete po,ing,svc,pv,pvc,sc,ep,rc,deploy,replicaset,daemonset --all -A
 
-
 1. You need to build the enviroment with this Terraform module-
 https://github.com/UrielOfir/terraform-kubernetes
 
 2. Then you need to [add an azure devops agent to the deafult agent pool](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops#azure-pipelines).
 It must be powershell agent.
+
+You need to add enviroment call `pool` to the azure devops envirometns.
 
 3. You need to connect your agent machine to the kuberntes cluster with azure-cli:
 `az aks get-credentials --resource-group kubernetes-resources --name kubernetes-aks1`
@@ -23,7 +24,7 @@ Add this variables:
     `okta_url`
     `pg_password` (pg= postgresql)
     `pg_username`
-    `registry_url` (url of the container registry)
+    `registry_url` (url of the container registry, )
     `registry_username`
     `registry_password`
     ```
