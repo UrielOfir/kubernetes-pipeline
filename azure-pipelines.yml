@@ -119,5 +119,5 @@ stages:
                      kubectl exec $pod -- sh -c "cd /usr/src/app/ && npm run initdb"     
                   displayName: npm run initdb
 
-                - powershell: kubectl rollout status webapp
+                - powershell: kubectl rollout status Deployment/webapp
                   displayName: check deployment status

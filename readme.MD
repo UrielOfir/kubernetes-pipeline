@@ -16,7 +16,7 @@ You need to add enviroment call `pool` to the azure devops envirometns.
 `az aks get-credentials --resource-group kubernetes-resources --name kubernetes-aks1`
 
 4. On your Azure DevOps project library, add a variable group called `common`.
-Add this variables:
+Add these variables:
     
     ```
     `okta_client_id`
@@ -24,11 +24,14 @@ Add this variables:
     `okta_url`
     `pg_password` (pg= postgresql)
     `pg_username`
-    `registry_url` (url of the container registry, )
+    `registry_url` (url of the container registry that was built by the Terraform code)
     `registry_username`
     `registry_password`
+    `cookie_pwd`
     ```
 ***
+
+5. Update the IP address in your application configuration in your okta account, to the ingress IP address of the kubernetes cluster. 
 
 ## About the app
 
