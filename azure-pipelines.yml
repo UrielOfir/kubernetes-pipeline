@@ -115,7 +115,7 @@ stages:
                   displayName: apply weightTrackerApp yaml
                 
                 - powershell: | 
-                     kubectl get pods --selector=app=webapp | %{$_ -split "\n"} | Select-Object -index 1 | %{$_ -split '\s+'} | Select-Object -index 0 -outvariable pod;
+                     kubectl get pods --selector=name=webapp-* | %{$_ -split "\n"} | Select-Object -index 2 | %{$_ -split '\s+'} | Select-Object -index 0 -outvariable pod;
                      kubectl exec $pod -- sh -c "cd /usr/src/app/ && npm run initdb"     
                   displayName: npm run initdb
 
