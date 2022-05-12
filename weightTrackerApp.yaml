@@ -89,6 +89,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: webapp-service
+  labels:
+    app: webapp
 spec:
   selector:
     app: webapp
