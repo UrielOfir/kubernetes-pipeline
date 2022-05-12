@@ -24,6 +24,8 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postgres-service
+  labels:
+    app: webapp
 spec:
   selector:
     app: postgres
